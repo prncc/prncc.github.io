@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Andrija (Andre) Peruničić</title>
+  <meta name="description" content="Andrija (Andre) Peruničić's homepage.">
+  <meta name="author" content="Andre Perunicic">
+
+  <meta property="og:title" content="Andrija (Andre) Peruničić">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://perunicic.com/">
+  <meta property="og:description" content="Andrija (Andre) Peruničić's homepage.">
+
+  <link rel="icon" href="/favicon.ico">
+
+  <script src="/css-doodle@0.37.7.min.js"></script>
+
+  <style>
+    body {
+      background-color: #ebdacc;
+      color: #050539;
+      font-family: Helvetica, sans-serif;
+      margin: 0;
+    }
+    a {
+      color: #217175;
+      text-decoration-style: underline;
+    }
+    a:hover {
+      color: #002f31;
+    }
+    a:active {
+      color: #691344;
+    }
+    .center {
+      left: 50%;
+      position: fixed;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .card {
+      background: #f1ece7;
+      border: 1em solid #202070;
+      padding: 2em;
+    }
+    .card ul {
+      margin-top: 3em;
+      padding: 0;
+      text-align: center;
+    }
+    .card li {
+      display: inline-block;
+    }
+    .card li:before {
+      content: "\00a0\2022\00a0\00a0";
+    }
+    .card li:first-child:before {
+      content: "";
+    }
+    .card h1, .card h2 {
+      text-align: center;
+    }
+    .card h2 {
+      margin: 0.7em 0;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <css-doodle id="doodle">
+  </css-doodle>
+
+  <div class="center card">
+    <h1>Andrija (Andre) Peruničić</h1>
+    <h2><a href="mailto:perunicic@gmail.com">perunicic@gmail.com</a></h2>
+    <ul>
+      <li>machine learning</li>
+      <li>math</li>
+      <li>programming</li>
+    </ul>
+  </div>
+
+  <script type="text/javascript">
+    const date = new Date();
+    const units = date.getSeconds();
+    /* See https://yuanchuan.dev/pixel-patterns for more formulas. */
+    const formulas = [
+      "((int(sin(1.07 * y + x) * sin(3.14 * x) * 12.0)) % 13) == 1",
+      "((int(-y * y * x) >> 17) & 1) == 1",
+      "((int(sin(1.07 * x) * sin(3.14 * y) * 12.0)) % 13) == 1",
+      "((int(x*x*y + y*y*x) >> 11) & 1) == 1",
+    ];
+    const pickedFormula = formulas[units % formulas.length];
+    const getGridResolution = () => (window.innerWidth <= 512) ? 128 : 256;
+
+    function generateDoodleContent(formula, resolution) {
+      return `
+          :doodle {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+          }
+          background: @pattern(
+            grid: ${resolution};
+            match(${formula}) {
+              fill: #202070;
+            }
+          );
+        }
+      `;
+    }
+    let doodle = document.querySelector("#doodle");
+    function updateBackground() {
+      const doodleContent = generateDoodleContent(pickedFormula, getGridResolution());
+      doodle.update(doodleContent);
+    }
+    updateBackground();
+    window.addEventListener("resize", updateBackground);
+  </script>
+
+</body>
+</html>
